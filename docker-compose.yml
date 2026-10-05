@@ -1,0 +1,37 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: ecommerce_server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+    networks:
+      - ecommerce_network
+    volumes:
+      - ./server/src:/usr/src/app/src
+
+  mongo:
+    image: mongo:7.0
+    container_name: ecommerce_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - ecommerce_network
+
+networks:
+  ecommerce_network:
+    driver: bridge
+
+volumes:
+  mongo_data:

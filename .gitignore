@@ -1,0 +1,10 @@
+# Local database files
+/data/
+
+# Environment variables and local overrides
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
